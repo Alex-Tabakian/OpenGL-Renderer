@@ -1,1 +1,0 @@
-This folder houses all intermediary files
