@@ -59,15 +59,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(MSBuildProjectDirectory)\..\..\wxwidgets.props" Condition="exists('$(MSBuildProjectDirectory)\..\..\wxwidgets.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(MSBuildProjectDirectory)\..\..\wxwidgets.props" Condition="exists('$(MSBuildProjectDirectory)\..\..\wxwidgets.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(MSBuildProjectDirectory)\..\..\wxwidgets.props" Condition="exists('$(MSBuildProjectDirectory)\..\..\wxwidgets.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(MSBuildProjectDirectory)\..\..\wxwidgets.props" Condition="exists('$(MSBuildProjectDirectory)\..\..\wxwidgets.props')" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -94,7 +98,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>GLFW_DLL;GLFW_INCLUDE_NONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)libs\glad\include;$(SolutionDir)libs\freeglut-MSVC-3.0.0-2.mp\freeglut\include;$(SolutionDir)libs\glfw-3.2.1\Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)libs\imgui;$(SolutionDir)libs\imgui\backends;$(SolutionDir)libs\glad\include;$(SolutionDir)libs\freeglut-MSVC-3.0.0-2.mp\freeglut\include;$(SolutionDir)libs\glfw-3.2.1\Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)libs\freeglut-MSVC-3.0.0-2.mp\freeglut\lib;$(SolutionDir)libs\glfw-3.2.1\Win32\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -113,7 +117,7 @@ copy /Y "$(SolutionDir)libs\glfw-3.2.1\Win32\lib-vc2015\glfw3.dll" "$(OutDir)"</
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>GLFW_DLL;GLFW_INCLUDE_NONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)libs\glad\include;$(SolutionDir)libs\freeglut-MSVC-3.0.0-2.mp\freeglut\include;$(SolutionDir)libs\glfw-3.2.1\x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)libs\imgui;$(SolutionDir)libs\imgui\backends;$(SolutionDir)libs\glad\include;$(SolutionDir)libs\freeglut-MSVC-3.0.0-2.mp\freeglut\include;$(SolutionDir)libs\glfw-3.2.1\x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)libs\freeglut-MSVC-3.0.0-2.mp\freeglut\lib\x64;$(SolutionDir)libs\glfw-3.2.1\x64\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -134,7 +138,7 @@ copy /Y "$(SolutionDir)libs\glfw-3.2.1\x64\lib-vc2015\glfw3.dll" "$(OutDir)"</Co
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>GLFW_DLL;GLFW_INCLUDE_NONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)libs\glad\include;$(SolutionDir)libs\freeglut-MSVC-3.0.0-2.mp\freeglut\include;$(SolutionDir)libs\glfw-3.2.1\Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)libs\imgui;$(SolutionDir)libs\imgui\backends;$(SolutionDir)libs\glad\include;$(SolutionDir)libs\freeglut-MSVC-3.0.0-2.mp\freeglut\include;$(SolutionDir)libs\glfw-3.2.1\Win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -157,7 +161,7 @@ copy /Y "$(SolutionDir)libs\glfw-3.2.1\Win32\lib-vc2015\glfw3.dll" "$(OutDir)"</
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>GLFW_DLL;GLFW_INCLUDE_NONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)libs\glad\include;$(SolutionDir)libs\freeglut-MSVC-3.0.0-2.mp\freeglut\include;$(SolutionDir)libs\glfw-3.2.1\x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs;$(SolutionDir)libs\imgui;$(SolutionDir)libs\imgui\backends;$(SolutionDir)libs\glad\include;$(SolutionDir)libs\freeglut-MSVC-3.0.0-2.mp\freeglut\include;$(SolutionDir)libs\glfw-3.2.1\x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -172,6 +176,13 @@ copy /Y "$(SolutionDir)libs\glfw-3.2.1\x64\lib-vc2015\glfw3.dll" "$(OutDir)"</Co
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EBO.cpp" />
+    <ClCompile Include="..\..\libs\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\libs\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\libs\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\libs\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\..\libs\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\..\libs\imgui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\..\libs\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\..\libs\glad\src\glad.c" />
     <ClCompile Include="Object.cpp" />
@@ -182,6 +193,11 @@ copy /Y "$(SolutionDir)libs\glfw-3.2.1\x64\lib-vc2015\glfw3.dll" "$(OutDir)"</Co
     <ClCompile Include="VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\libs\imgui\imconfig.h" />
+    <ClInclude Include="..\..\libs\imgui\imgui.h" />
+    <ClInclude Include="..\..\libs\imgui\imgui_internal.h" />
+    <ClInclude Include="..\..\libs\imgui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="..\..\libs\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="..\..\libs\glad\include\glad.h" />
     <ClInclude Include="..\..\libs\glad\include\khrplatform.h" />
     <ClInclude Include="..\..\libs\stb\stb_image.h" />

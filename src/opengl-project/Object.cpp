@@ -1,6 +1,6 @@
 #include "Object.h"
 
-Object::Object(float vertexArray[], int vertexArraySize,
+Object::Object(std::string name, float vertexArray[], int vertexArraySize,
     unsigned int indexArray[], int indexArraySize,
     Shader& shader, bool light)
     : vertices(vertexArray),
@@ -10,7 +10,8 @@ Object::Object(float vertexArray[], int vertexArraySize,
     shaderProgram(shader),
     VBO1(vertexArray, vertexArraySize * sizeof(float)),
     EBO1(indexArray, indexArraySize * sizeof(unsigned int)),
-    isLight(light)
+    isLight(light),
+    name(name)
 {
     VAO1.Bind();
     EBO1.Bind();

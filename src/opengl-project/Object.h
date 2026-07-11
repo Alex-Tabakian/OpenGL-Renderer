@@ -20,6 +20,7 @@ public:
     bool isLight;
     int vertexCount;
     int indexCount;
+    std::string name;
 
     Shader& shaderProgram;
     VAO VAO1;
@@ -30,9 +31,7 @@ public:
     glm::vec3 rotation = glm::vec3(0.0f);
     glm::vec3 objectScale = glm::vec3(1.0f);
 
-    glm::vec3 velocity = glm::vec3(0.0f);
-
-    Object(float vertexArray[], int vertexArraySize, unsigned int indexArray[], int indexArraySize, Shader& shader, bool isLight);
+    Object(std::string name, float vertexArray[], int vertexArraySize, unsigned int indexArray[], int indexArraySize, Shader& shader, bool isLight);
 
     void Move(float x, float y, float z);
     void Rotate(float x, float y, float z);

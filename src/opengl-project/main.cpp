@@ -1,9 +1,13 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 #include <stb/stb_image.h>
 #include <glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
+
 
 #include "shaderClass.h"
 #include "Texture.h"
@@ -18,7 +22,9 @@
 #include <cmath>
 #include <vector>
 
-const unsigned int width = 800;
+const unsigned int sceneWidth = 800;
+const unsigned int guiWidth = 300;
+const unsigned int width = sceneWidth + guiWidth;
 const unsigned int height = 800;
 
 // Position              // Color
@@ -173,9 +179,21 @@ void draw(GLFWwindow* window, const std::vector<Object*>& objects, int width, in
     // Main render loop
     while (!glfwWindowShouldClose(window))
     {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
         // BG color
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        int framebufferWidth = 0;
+        int framebufferHeight = 0;
+        glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
+
+        const int panelWidth = static_cast<int>(guiWidth);
+        const int renderWidth = framebufferWidth > panelWidth ? framebufferWidth - panelWidth : framebufferWidth;
+        glViewport(0, 0, renderWidth, framebufferHeight);
 
         // Loops through object list
         for (Object* object : objects)
@@ -196,7 +214,7 @@ void draw(GLFWwindow* window, const std::vector<Object*>& objects, int width, in
             glm::mat4 proj(1.0f);
 
             // 45 FOV, .1 Min view distance, 100 Max view distance
-            proj = glm::perspective(glm::radians(45.0f), static_cast<float>(width) / static_cast<float>(height), 0.1f,100.0f);
+            proj = glm::perspective(glm::radians(45.0f), static_cast<float>(renderWidth) / static_cast<float>(framebufferHeight), 0.1f,100.0f);
 
             glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -220,6 +238,51 @@ void draw(GLFWwindow* window, const std::vector<Object*>& objects, int width, in
 
             glDrawElements(GL_TRIANGLES, object->indexCount, GL_UNSIGNED_INT, nullptr);
         }
+
+        glViewport(0, 0, framebufferWidth, framebufferHeight);
+
+        // GUI for object data
+
+        ImGui::SetNextWindowPos(ImVec2(static_cast<float>(renderWidth), 0.0f));
+        ImGui::SetNextWindowSize(ImVec2(static_cast<float>(panelWidth), static_cast<float>(framebufferHeight)));
+        ImGui::Begin("Inspector", nullptr,
+            ImGuiWindowFlags_NoMove |
+            ImGuiWindowFlags_NoResize |
+            ImGuiWindowFlags_NoCollapse |
+            ImGuiWindowFlags_NoTitleBar);
+
+        for (int i = 0; i < static_cast<int>(objects.size()); i++)
+        {
+
+
+            ImGui::PushID(i);
+
+            ImGui::TextUnformatted(objects[i]->name.c_str());
+
+            ImGui::InputFloat3(
+                "Position",
+                glm::value_ptr(objects[i]->position)
+            );
+
+            ImGui::InputFloat3(
+                "Rotation",
+                glm::value_ptr(objects[i]->rotation)
+            );
+
+            ImGui::InputFloat3(
+                "Scale",
+                glm::value_ptr(objects[i]->objectScale)
+            );
+
+            ImGui::PopID();
+        }
+
+        
+
+        ImGui::End();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         
 
         glfwSwapBuffers(window);
@@ -230,6 +293,8 @@ void draw(GLFWwindow* window, const std::vector<Object*>& objects, int width, in
 
 int main()
 {
+
+    //wxIMPLEMENT_APP(App);
 
     // glfw: initialize and configure
     // ------------------------------
@@ -253,6 +318,12 @@ int main()
     glfwMakeContextCurrent(window);
     gladLoadGL();
     glViewport(0, 0, width, height);
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
 
 
     
@@ -278,20 +349,20 @@ int main()
         
     std::vector<Object*> objects;
     //Light
-    Object obj0(lightData.vertices, lightData.vertexCount, lightData.indices, lightData.indexCount, shaderProgram, true);
+    Object obj0("lightCube", lightData.vertices, lightData.vertexCount, lightData.indices, lightData.indexCount, shaderProgram, true);
     obj0.Move(1.8f, 1.8f, -4.0f);
     obj0.SetScale(0.15f);
     objects.push_back(&obj0);
         
     //Teapot
-    Object obj1(data1.vertices, data1.vertexCount, data1.indices, data1.indexCount, shaderProgram, false);
+    Object obj1("cyanTeapot", data1.vertices, data1.vertexCount, data1.indices, data1.indexCount, shaderProgram, false);
     obj1.Move(0.0f, -2.5f, -8.0f);
     obj1.Rotate(0.0f, 45.0f, 0.0f);
     obj1.SetScale(0.75f);
     objects.push_back(&obj1);
 
     //Teapot2
-    Object obj2(data2.vertices, data1.vertexCount, data1.indices, data1.indexCount, shaderProgram, false);
+    Object obj2("redTeapot", data2.vertices, data1.vertexCount, data1.indices, data1.indexCount, shaderProgram, false);
     obj2.Move(0.0f, 2.5f, -8.0f);
     obj2.Rotate(0.0f, -45.0f, 180.0f);
     obj2.SetScale(0.75f);
@@ -304,10 +375,13 @@ int main()
     obj2.SetScale(1.0f);
     objects.push_back(&obj2);*/
 
-    draw(window, objects,800,800);
+    draw(window, objects, sceneWidth, height);
 
     shaderProgram.Delete();
     
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 
     glfwDestroyWindow(window);
 

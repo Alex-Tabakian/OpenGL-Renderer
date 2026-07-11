@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros">
+    <WXWIN Condition="'$(WXWIN)' == '' And Exists('$(MSBuildThisFileDirectory)libs\wxWidgets\include\wx\wx.h')">$(MSBuildThisFileDirectory)libs\wxWidgets</WXWIN>
+    <WXWIN Condition="'$(WXWIN)' == '' And Exists('C:\wxWidgets-3.2.6')">C:\wxWidgets-3.2.6</WXWIN>
+    <WXWIN Condition="'$(WXWIN)' == '' And Exists('C:\wxWidgets-3.2.5')">C:\wxWidgets-3.2.5</WXWIN>
+    <WXWIN Condition="'$(WXWIN)' == '' And Exists('C:\wxWidgets-3.2.4')">C:\wxWidgets-3.2.4</WXWIN>
+    <WXWIN Condition="'$(WXWIN)' == '' And Exists('C:\wxWidgets-3.2.3')">C:\wxWidgets-3.2.3</WXWIN>
+    <WXWIN Condition="'$(WXWIN)' == '' And Exists('C:\wxWidgets-3.2.2')">C:\wxWidgets-3.2.2</WXWIN>
+    <WXWIN Condition="'$(WXWIN)' == '' And Exists('C:\wxWidgets-3.2.1')">C:\wxWidgets-3.2.1</WXWIN>
+    <WXWIN Condition="'$(WXWIN)' == '' And Exists('C:\wxWidgets-3.2.0')">C:\wxWidgets-3.2.0</WXWIN>
+    <WXWIN Condition="'$(WXWIN)' == '' And Exists('C:\wxWidgets')">C:\wxWidgets</WXWIN>
+    <WxLibFlavor Condition="'$(Configuration)' == 'Debug'">mswud</WxLibFlavor>
+    <WxLibFlavor Condition="'$(Configuration)' != 'Debug'">mswu</WxLibFlavor>
+    <WxLibSuffix Condition="'$(Configuration)' == 'Debug'">32ud</WxLibSuffix>
+    <WxLibSuffix Condition="'$(Configuration)' != 'Debug'">32u</WxLibSuffix>
+    <WxLibDir Condition="'$(Platform)' == 'x64'">$(WXWIN)\lib\vc_x64_lib</WxLibDir>
+    <WxLibDir Condition="'$(Platform)' == 'Win32'">$(WXWIN)\lib\vc_lib</WxLibDir>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup Condition="'$(WXWIN)' != ''">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(WXWIN)\include;$(WxLibDir)\$(WxLibFlavor);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(WxLibDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>wxmsw$(WxLibSuffix)_core.lib;wxbase$(WxLibSuffix).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemGroup>
+    <BuildMacro Include="WXWIN">
+      <Value>$(WXWIN)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
